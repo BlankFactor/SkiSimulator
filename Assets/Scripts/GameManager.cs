@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [HideInInspector]
+    public static GameManager instance;
+
+    public bool gameStarted;
+    public bool gamePaused;
+    public bool gameCeased;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +26,36 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void StartGame()
+    {
+        gameStarted = true;
+    }
+
+    public void CeaseGame()
+    {
+        gameStarted = false;
+        gameCeased = true;
+    }
+
+    public void PauseGame()
+    {
+        if (gamePaused)
+        {
+            gamePaused = false;
+        }
+        else
+        {
+            gamePaused = true;
+        }
+    }
+
+    public bool CheckIfGaming()
+    {
+        if (gamePaused || !gameStarted)
+            return false;
+
+        return true;
     }
 }

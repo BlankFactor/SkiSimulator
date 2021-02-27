@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerController instance;
+    [HideInInspector]
+    public static PlayerController instance;
     public Character character;
-    public Animator ani;
+
     private void Awake()
     {
         instance = this;
@@ -21,26 +22,40 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.instance.CheckIfGaming())
+            return;
+
         if (Input.GetMouseButton(0))
         {
-            ani.SetBool("leftDown", true);
+            character.SetLeftDown(true);
         }else
         {
-            ani.SetBool("leftDown", false);
+            character.SetLeftDown(false);
         }
 
         if (Input.GetMouseButton(1))
         {
-            ani.SetBool("rightDown", true);
+            character.SetRightDown(true);
         }
         else
         {
-            ani.SetBool("rightDown", false);
+            character.SetRightDown(false);
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            character.Grab(true);
+        }
+        else
+        {
+            character.Grab(false);
         }
     }
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance.CheckIfGaming())
+            return;
 
         if (Input.GetKey(KeyCode.A))
         {

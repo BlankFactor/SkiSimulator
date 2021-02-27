@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     public float force;
     public float rotationSpeed;
 
+    public bool grabed;
     public bool falled;
     public bool overGround;
 
@@ -25,12 +26,16 @@ public class Character : MonoBehaviour
 
     public LayerMask layer_Gronud;
 
+    private Animator ani;
     private FixedJoint2D joint;
+    private Rigidbody2D rig;
 
     // Start is called before the first frame update
     void Start()
     {
         joint = GetComponent<FixedJoint2D>();
+        ani = GetComponent<Animator>();
+        rig = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -42,7 +47,7 @@ public class Character : MonoBehaviour
         }
 
         RaycastHit2D hit = Physics2D.Raycast(leftPoint.transform.position,tf_Ski.up * -1,Checklength,layer_Gronud);
-        if (hit.collider != null && hit.collider.tag == "Ground")
+        if (hit.collider != null)
         {
             readyToJump_Left = true;
         }
@@ -53,7 +58,7 @@ public class Character : MonoBehaviour
 
         hit = Physics2D.Raycast(rightPoint.transform.position, tf_Ski.up * -1, Checklength, layer_Gronud);
 
-        if (hit.collider != null && hit.collider.tag == "Ground")
+        if (hit.collider != null)
         {
             readyToJump_Right = true;
         }
@@ -106,14 +111,14 @@ public class Character : MonoBehaviour
 
     public void Rotate_Left()
     {
-        if (!overGround) return;
+        if (!overGround || !grabed) return;
 
         transform.Rotate(Vector3.forward * rotationSpeed);
     }
 
     public void Rotate_Right()
     {
-        if (!overGround) return;
+        if (!overGround || !grabed) return;
 
         transform.Rotate(Vector3.forward * rotationSpeed * -1); 
     }
@@ -123,7 +128,7 @@ public class Character : MonoBehaviour
         if (falled)
             return;
 
-        if (collision.transform.tag == "Ground")
+        if (collision.transform.tag == "Snowfield")
         {
             if (joint)
             {
@@ -133,10 +138,39 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void SetLeftDown(bool _v)
+    {
+        if (grabed)
+            return;
+
+        ani.SetBool("leftDown", _v);
+    }
+
+    public void SetRightDown(bool _v)
+    {
+        if (grabed)
+            return;
+
+        ani.SetBool("rightDown", _v);
+    }
+
     void Fall()
     {
-        falled = true;
+        falled  = true;
         GetComponent<Animator>().SetBool("Falled", falled);
         GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Horizontal;
+    }
+
+    public void Grab(bool _v)
+    {
+        if (_v == grabed)
+        {
+            return;
+        }
+        else
+        {
+            ani.SetBool("Grabed", _v);
+            grabed = _v;
+        }
     }
 }
