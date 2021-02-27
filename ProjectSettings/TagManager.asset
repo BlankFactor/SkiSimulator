@@ -43,9 +43,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background_Far
+    uniqueID: 1357279775
+    locked: 0
+  - name: Background_Medium
+    uniqueID: 3261575083
+    locked: 0
+  - name: Background_Close
+    uniqueID: 2485130505
+    locked: 0
   - name: Character
     uniqueID: 23854147
     locked: 0
   - name: Ski
     uniqueID: 454101389
+    locked: 0
+  - name: Foreground
+    uniqueID: 3920448693
     locked: 0
