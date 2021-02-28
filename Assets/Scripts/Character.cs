@@ -128,7 +128,7 @@ public class Character : MonoBehaviour
         if (falled)
             return;
 
-        if (collision.transform.tag == "Snowfield")
+        if (collision.transform.tag == "Snowfield" ||  collision.transform.tag == "Ground")
         {
             if (joint)
             {
