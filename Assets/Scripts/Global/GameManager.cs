@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
     public bool gameStarted;
     public bool gamePaused;
     public bool gameCeased;
+    public bool inRacingTrack = true;
 
+    [Header("Objects")]
+    public Transform spawnPoint;
     private void Awake()
     {
         instance = this;
@@ -25,12 +28,16 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameStarted) return;
+
+        if (Input.GetKeyDown(KeyCode.R))
+            StartGame();
     }
 
     public void StartGame()
     {
         gameStarted = true;
+        CameraController.instance.SwitchToPlayerCamera();
     }
 
     public void CeaseGame()
@@ -57,5 +64,10 @@ public class GameManager : MonoBehaviour
             return false;
 
         return true;
+    }
+
+    public void Restart()
+    {
+        
     }
 }

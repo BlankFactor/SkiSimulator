@@ -23,7 +23,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (!GameManager.instance.CheckIfGaming())
+        {
+
+
             return;
+        }
 
         if (Input.GetMouseButton(0))
         {

@@ -73,17 +73,19 @@ public class Character : MonoBehaviour
             overGround = false;
     }
 
-    public void AddForceAtLeft()
+    public void AddForceAtLeft(float _mutiple = 1.0f)
     {
         if (!readyToJump_Left)
             return;
-        rig_Ski.AddForceAtPosition(tf_Ski.transform.up * force, leftPoint.transform.position);
+
+        rig_Ski.AddForceAtPosition(tf_Ski.transform.up * force * _mutiple, leftPoint.transform.position);
     }
-    public void AddForceAtRight()
+    public void AddForceAtRight(float _mutiple)
     {
         if (!readyToJump_Right)
             return;
-        rig_Ski.AddForceAtPosition(tf_Ski.transform.up * force, rightPoint.transform.position);
+
+        rig_Ski.AddForceAtPosition(tf_Ski.transform.up * force * _mutiple, rightPoint.transform.position);
     }
 
     public void OnDrawGizmos()
@@ -111,14 +113,14 @@ public class Character : MonoBehaviour
 
     public void Rotate_Left()
     {
-        if (!overGround || !grabed) return;
+        if (!overGround || !grabed || falled) return;
 
         transform.Rotate(Vector3.forward * rotationSpeed);
     }
 
     public void Rotate_Right()
     {
-        if (!overGround || !grabed) return;
+        if (!overGround || !grabed || falled) return;
 
         transform.Rotate(Vector3.forward * rotationSpeed * -1); 
     }
@@ -159,6 +161,9 @@ public class Character : MonoBehaviour
         falled  = true;
         GetComponent<Animator>().SetBool("Falled", falled);
         GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Horizontal;
+
+        Judge.instance.PlayerFalled();
+        GameManager.instance.CeaseGame();
     }
 
     public void Grab(bool _v)

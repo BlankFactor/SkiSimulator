@@ -14,7 +14,6 @@ public class DataRecorder : MonoBehaviour
     [Header("Objects")]
     public Rigidbody2D player_Rig;
 
-
     private void Awake()
     {
         instance = this;
