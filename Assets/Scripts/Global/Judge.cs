@@ -16,7 +16,7 @@ public class Judge : MonoBehaviour
     public bool judgingVelocity;
     public float checkVelPerS = 2.0f;
 
-    public bool judingAngle;
+    public bool judgingAngle;
     public float changedAngle;
 
     public float playerDis;
@@ -67,11 +67,11 @@ public class Judge : MonoBehaviour
         }
 
         // Angle judgement
-        if (!judingAngle)
+        if (!judgingAngle)
         {
             if (character.overGround)
             {
-                judingAngle = true;
+                judgingAngle = true;
                 changedAngle = 0;
             }
         }
@@ -79,7 +79,7 @@ public class Judge : MonoBehaviour
         {
             if (!character.overGround)
             {
-                judingAngle = false;
+                judgingAngle = false;
 
                 changedAngle = Mathf.Abs(changedAngle);
 
@@ -163,6 +163,17 @@ public class Judge : MonoBehaviour
     public void PlayerFalled()
     {
         point = 0;
+    }
+
+    public void Reset()
+    {
+        point = 50;
+
+        checkingDis = false;
+        judgingVelocity = false;
+        judgingAngle = false;
+
+        playerDis = -7.42f;
     }
 
     private void OnDrawGizmos()

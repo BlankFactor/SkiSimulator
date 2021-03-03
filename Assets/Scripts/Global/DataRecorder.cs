@@ -11,6 +11,9 @@ public class DataRecorder : MonoBehaviour
     public float player_Velocity_X;
     public float player_Velocity_Y;
 
+    public int min;
+    public int sec;
+
     [Header("Objects")]
     public Rigidbody2D player_Rig;
 
@@ -29,5 +32,13 @@ public class DataRecorder : MonoBehaviour
     {
         player_Velocity_X = player_Rig.velocity.x;
         player_Velocity_Y = player_Rig.velocity.y;
+
+        min = (int)(Time.time / 60);
+        sec = (int)(Time.time % 60);
+    }
+
+    public void ResetTime()
+    {
+        min = sec = 0;
     }
 }

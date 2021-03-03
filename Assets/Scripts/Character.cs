@@ -178,4 +178,27 @@ public class Character : MonoBehaviour
             grabed = _v;
         }
     }
+
+    public void Reset()
+    {
+        falled = false;
+        GetComponent<Animator>().SetBool("Falled", falled);
+
+        if (!joint)
+        {
+            joint = gameObject.AddComponent<FixedJoint2D>();
+
+            joint.connectedBody = rig_Ski;
+        }
+        else
+        {
+            if (!joint.enabled)
+                joint.enabled = true;
+        }
+
+        Grab(false);
+        ani.Play("Idle");
+
+        rig.velocity = Vector2.zero;
+    }
 }

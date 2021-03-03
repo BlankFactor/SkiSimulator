@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Objects")]
     public Transform spawnPoint;
+    public GameObject player;
+    private Animator ani;
+
     private void Awake()
     {
         instance = this;
@@ -22,7 +25,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartGame();
+        ani = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,8 +34,12 @@ public class GameManager : MonoBehaviour
     {
         if (gameStarted) return;
 
-        if (Input.GetKeyDown(KeyCode.R))
-            StartGame();
+        if (gameCeased && Input.GetKeyDown(KeyCode.R))
+        {
+            gameCeased = false;
+
+            ani.Play("Restart");
+        }
     }
 
     public void StartGame()
@@ -68,6 +76,15 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        
+        player.GetComponent<Animator>().Play("Idle");
+        player.GetComponent<Character>().Reset();
+        StartGame();
+
+        player.transform.position = spawnPoint.position;
+        player.transform.eulerAngles = Vector3.zero;
+
+        Judge.instance.Reset();
+
+        DataRecorder.instance.ResetTime();
     }
 }
