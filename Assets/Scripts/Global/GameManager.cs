@@ -46,12 +46,16 @@ public class GameManager : MonoBehaviour
     {
         gameStarted = true;
         CameraController.instance.SwitchToPlayerCamera();
+
+        CameraController.instance.SetEnableMainAnimator(true);
     }
 
     public void CeaseGame()
     {
         gameStarted = false;
         gameCeased = true;
+
+        CameraController.instance.SetEnableMainAnimator(false);
     }
 
     public void PauseGame()

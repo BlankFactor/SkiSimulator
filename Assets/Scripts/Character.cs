@@ -146,6 +146,7 @@ public class Character : MonoBehaviour
             return;
 
         ani.SetBool("leftDown", _v);
+        CameraController.instance.SetMainAniamtor("leftDown", _v);
     }
 
     public void SetRightDown(bool _v)
@@ -154,6 +155,7 @@ public class Character : MonoBehaviour
             return;
 
         ani.SetBool("rightDown", _v);
+        CameraController.instance.SetMainAniamtor("rightDown", _v);
     }
 
     void Fall()
@@ -164,6 +166,8 @@ public class Character : MonoBehaviour
 
         Judge.instance.PlayerFalled();
         GameManager.instance.CeaseGame();
+
+        rig.AddForce(new Vector2(Random.Range(-1, 1f), Random.Range(-1, 1f)) * 130000);
     }
 
     public void Grab(bool _v)
