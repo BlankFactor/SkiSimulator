@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!GameManager.instance.CheckIfGaming())
         {
-
-
             return;
         }
 

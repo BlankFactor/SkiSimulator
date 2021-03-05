@@ -71,6 +71,8 @@ public class Character : MonoBehaviour
             overGround = true;
         else
             overGround = false;
+
+
     }
 
     public void AddForceAtLeft(float _mutiple = 1.0f)

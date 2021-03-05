@@ -62,4 +62,9 @@ public class CameraController : MonoBehaviour
     {
         ani_MainCam.enabled = _v;
     }
+
+    public void ShakeCamera()
+    {
+        ani_MainCam.Play("Shake");
+    }
 }
