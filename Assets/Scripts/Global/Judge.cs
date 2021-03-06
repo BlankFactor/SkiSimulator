@@ -115,7 +115,7 @@ public class Judge : MonoBehaviour
             }
         }
 
-        point = Mathf.Clamp(point, 0, 100);
+        //point = Mathf.Clamp(point, 0, 100);
 
         //Debug.Log(trans_Player.eulerAngles.z);
     }
@@ -128,7 +128,7 @@ public class Judge : MonoBehaviour
         {
             if (DataRecorder.instance.player_Velocity_X > 0 && DataRecorder.instance.player_Velocity_X <= velocityLevel.x)
             {
-                point -= 2;
+                point -= 5;
             }
             else if (DataRecorder.instance.player_Velocity_X > velocityLevel.x && DataRecorder.instance.player_Velocity_X <= velocityLevel.y)
             {
