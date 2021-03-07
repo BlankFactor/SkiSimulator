@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         gameStarted = true;
         CameraController.instance.SwitchToPlayerCamera();
 
+        PlayerController.instance.SetControlable(true);
         CameraController.instance.SetEnableMainAnimator(true);
     }
 

@@ -9,6 +9,8 @@ public class Judge : MonoBehaviour
 
     public float point = 50;
 
+    public bool judgable = true;
+
     public Transform trans_Player;
     public Character character;
 
@@ -66,55 +68,57 @@ public class Judge : MonoBehaviour
             StartCoroutine(MonitorSpeed());
         }
 
-        // Angle judgement
-        if (!judgingAngle)
+        if (judgable)
         {
-            if (character.overGround)
+            // Angle judgement
+            if (!judgingAngle)
             {
-                judgingAngle = true;
-                changedAngle = 0;
-            }
-        }
-        else
-        {
-            if (!character.overGround)
-            {
-                judgingAngle = false;
-
-                changedAngle = Mathf.Abs(changedAngle);
-
-                float np = 0;
-                if(changedAngle >= 180 && changedAngle < 360)
+                if (character.overGround)
                 {
-                    np = 4;
+                    judgingAngle = true;
+                    changedAngle = 0;
                 }
-                else if(changedAngle >= 360 && changedAngle < 720)
-                {
-                    np = 10;
-                    np += ((changedAngle - 360) / 360) * 10;
-                }
-                else if(changedAngle >= 720)
-                {
-                    np = 20;
-                    np += (changedAngle - 720) * 0.05f;
-                }
-
-                point += np;
-                Debug.Log("Angle : " + changedAngle + " Additional point : " + np);
             }
             else
             {
-                if (Input.GetKey(KeyCode.A))
+                if (!character.overGround)
                 {
-                    changedAngle -= character.rotationSpeed;
+                    judgingAngle = false;
+
+                    changedAngle = Mathf.Abs(changedAngle);
+
+                    float np = 0;
+                    if (changedAngle >= 180 && changedAngle < 360)
+                    {
+                        np = 4;
+                    }
+                    else if (changedAngle >= 360 && changedAngle < 720)
+                    {
+                        np = 10;
+                        np += ((changedAngle - 360) / 360) * 10;
+                    }
+                    else if (changedAngle >= 720)
+                    {
+                        np = 20;
+                        np += (changedAngle - 720) * 0.05f;
+                    }
+
+                    point += np;
+                    Debug.Log("Angle : " + changedAngle + " Additional point : " + np);
                 }
-                else if (Input.GetKey(KeyCode.D))
+                else
                 {
-                    changedAngle += character.rotationSpeed;
+                    if (Input.GetKey(KeyCode.A))
+                    {
+                        changedAngle -= character.rotationSpeed;
+                    }
+                    else if (Input.GetKey(KeyCode.D))
+                    {
+                        changedAngle += character.rotationSpeed;
+                    }
                 }
             }
         }
-
         //point = Mathf.Clamp(point, 0, 100);
 
         //Debug.Log(trans_Player.eulerAngles.z);
@@ -124,23 +128,26 @@ public class Judge : MonoBehaviour
     {
         yield return new WaitForSeconds(checkVelPerS);
 
-        if (GameManager.instance.CheckIfGaming())
+        if (judgable)
         {
-            if (DataRecorder.instance.player_Velocity_X > 0 && DataRecorder.instance.player_Velocity_X <= velocityLevel.x)
+            if (GameManager.instance.CheckIfGaming())
             {
-                point -= 5;
+                if (DataRecorder.instance.player_Velocity_X > 0 && DataRecorder.instance.player_Velocity_X <= velocityLevel.x)
+                {
+                    point -= 5;
+                }
+                else if (DataRecorder.instance.player_Velocity_X > velocityLevel.x && DataRecorder.instance.player_Velocity_X <= velocityLevel.y)
+                {
+                    point += 1;
+                }
+                else if (DataRecorder.instance.player_Velocity_X > velocityLevel.y)
+                {
+                    point += 2;
+                }
             }
-            else if (DataRecorder.instance.player_Velocity_X > velocityLevel.x && DataRecorder.instance.player_Velocity_X <= velocityLevel.y)
-            {
-                point += 1;
-            }
-            else if (DataRecorder.instance.player_Velocity_X > velocityLevel.y)
-            {
-                point += 2;
-            }
-        }
 
-        judgingVelocity = false;
+            judgingVelocity = false;
+        }
     }
 
     IEnumerator MonitorDis()
@@ -149,12 +156,15 @@ public class Judge : MonoBehaviour
 
         yield return new WaitForSeconds(checkDisCountDown);
 
-        if(temp == playerDis)
+        if (judgable)
         {
-            Debug.Log("Waste"); 
-            GameManager.instance.CeaseGame();
+            if (temp == playerDis)
+            {
+                Debug.Log("Waste");
+                GameManager.instance.CeaseGame();
 
-            point = 0;
+                point = 0;
+            }
         }
 
         checkingDis = false;
@@ -189,4 +199,8 @@ public class Judge : MonoBehaviour
         Gizmos.DrawLine(vc, vc2);
     }
 
+    public void SetJudgable(bool _v)
+    {
+        judgable = _v;
+    }
 }

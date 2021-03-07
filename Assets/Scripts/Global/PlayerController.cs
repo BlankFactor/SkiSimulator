@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
     public Character character;
 
+    public bool controlable;
+
     private void Awake()
     {
         instance = this;
@@ -16,13 +18,13 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.CheckIfGaming())
+        if (!GameManager.instance.CheckIfGaming() || !controlable)
         {
             return;
         }
@@ -67,5 +69,10 @@ public class PlayerController : MonoBehaviour
         {
             character.Rotate_Right();
         }
+    }
+
+    public void SetControlable(bool _v)
+    {
+        controlable = _v;
     }
 }
