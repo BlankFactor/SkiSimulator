@@ -9,7 +9,7 @@ public class Judge : MonoBehaviour
 
     public float point = 50;
 
-    public bool judgable = true;
+    public bool judgable = false;
 
     public Transform trans_Player;
     public Character character;
@@ -45,7 +45,7 @@ public class Judge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.instance.CheckIfGaming())
+        if (!GameManager.instance.CheckIfGaming() || !judgable)
             return;
 
         // Dis judgement
@@ -134,7 +134,7 @@ public class Judge : MonoBehaviour
             {
                 if (DataRecorder.instance.player_Velocity_X > 0 && DataRecorder.instance.player_Velocity_X <= velocityLevel.x)
                 {
-                    point -= 5;
+                    point -= 3;
                 }
                 else if (DataRecorder.instance.player_Velocity_X > velocityLevel.x && DataRecorder.instance.player_Velocity_X <= velocityLevel.y)
                 {

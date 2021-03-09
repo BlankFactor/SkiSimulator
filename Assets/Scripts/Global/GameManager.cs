@@ -92,4 +92,14 @@ public class GameManager : MonoBehaviour
 
         DataRecorder.instance.ResetTime();
     }
+
+    public void Restart_WithAni()
+    {
+        ani.Play("Restart");
+    }
+
+    public void SetSpawnPoint(Transform _v)
+    {
+        spawnPoint = _v;
+    }
 }

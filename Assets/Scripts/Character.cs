@@ -205,6 +205,8 @@ public class Character : MonoBehaviour
         Grab(false);
         ani.Play("Idle");
 
-        rig.velocity = Vector2.zero;
+        rig.velocity = Vector3.zero;
+        rig_Ski.velocity = Vector3.zero;
+        transform.eulerAngles = Vector3.zero;
     }
 }
