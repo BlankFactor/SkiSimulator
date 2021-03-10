@@ -33,6 +33,6 @@ public class SpriteChanger : MonoBehaviour
         else
             sr.sprite = sprite_Origin;
 
-        Invoke("ChangeSprite", 1.0f);
+        Invoke("ChangeSprite", duration);
     }
 }

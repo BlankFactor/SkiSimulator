@@ -166,6 +166,7 @@ public class Character : MonoBehaviour
         GetComponent<Animator>().SetBool("Falled", falled);
         GetComponent<CapsuleCollider2D>().direction = CapsuleDirection2D.Horizontal;
 
+        GUIController.instance.DisplayTip_Restart(true);
         Judge.instance.PlayerFalled();
         GameManager.instance.CeaseGame();
 

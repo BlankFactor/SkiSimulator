@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         {
             gameCeased = false;
 
-            ani.Play("Restart");
+            Restart_WithAni();
         }
     }
 
@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
     public void Restart_WithAni()
     {
         ani.Play("Restart");
+        GUIController.instance.DisplayTip_Restart(false);
     }
 
     public void SetSpawnPoint(Transform _v)

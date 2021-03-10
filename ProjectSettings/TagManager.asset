@@ -47,6 +47,9 @@ TagManager:
   - name: Sky
     uniqueID: 793742263
     locked: 0
+  - name: Clound
+    uniqueID: 1424880351
+    locked: 0
   - name: Background_Far
     uniqueID: 1357279775
     locked: 0

@@ -162,7 +162,7 @@ public class Judge : MonoBehaviour
             {
                 Debug.Log("Waste");
                 GameManager.instance.CeaseGame();
-
+                GUIController.instance.DisplayTip_Restart(true);
                 point = 0;
             }
         }
