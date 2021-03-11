@@ -54,6 +54,11 @@ public class PlayerController : MonoBehaviour
         {
             character.Grab(false);
         }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            character.ReleaseSkill();
+        }
     }
 
     private void FixedUpdate()

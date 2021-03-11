@@ -80,5 +80,6 @@ public class TestRecorder : MonoBehaviour
     public void Set_GravityScale()
     {
         char_Rig.gravityScale = slider_GravityScale.value;
+        char_Rig.GetComponent<Character>().GetSkiRig().gravityScale = slider_GravityScale.value;
     }
 }

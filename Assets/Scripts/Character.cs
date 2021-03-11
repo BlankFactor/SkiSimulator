@@ -30,9 +30,16 @@ public class Character : MonoBehaviour
     private FixedJoint2D joint;
     private Rigidbody2D rig;
 
+    public ISkill skill;
+
+    public List<SpriteRenderer> sr = new List<SpriteRenderer>();
+
     // Start is called before the first frame update
     void Start()
     {
+        // Test
+        skill = SkillManager.instance.GetSkill_ReverseGravity(); 
+
         joint = GetComponent<FixedJoint2D>();
         ani = GetComponent<Animator>();
         rig = GetComponent<Rigidbody2D>();
@@ -209,5 +216,30 @@ public class Character : MonoBehaviour
         rig.velocity = Vector3.zero;
         rig_Ski.velocity = Vector3.zero;
         transform.eulerAngles = Vector3.zero;
+    }
+
+    public void ReleaseSkill()
+    {
+        if (skill == null)
+            return;
+
+        skill.Release(this);
+    }
+
+    public Rigidbody2D GetSkiRig()
+    {
+        return rig_Ski;
+    }
+    public Rigidbody2D GetRig()
+    {
+        return rig;
+    }
+
+    public void ReverseSprite()
+    {
+        foreach(var i in sr)
+        {
+            i.flipX = !i.flipX;
+        }
     }
 }
