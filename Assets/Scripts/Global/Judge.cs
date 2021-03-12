@@ -184,6 +184,8 @@ public class Judge : MonoBehaviour
         judgingAngle = false;
 
         playerDis = -7.42f;
+
+        StopAllCoroutines();
     }
 
     private void OnDrawGizmos()

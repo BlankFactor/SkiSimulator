@@ -67,4 +67,9 @@ public class CameraController : MonoBehaviour
     {
         ani_MainCam.Play("Shake");
     }
+
+    public void ReverseMainCam(bool _v)
+    {
+        mainVC.GetComponent<MainCamera>().Reverse(_v);
+    }
 }

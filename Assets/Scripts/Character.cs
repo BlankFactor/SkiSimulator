@@ -31,14 +31,16 @@ public class Character : MonoBehaviour
     private Rigidbody2D rig;
 
     public ISkill skill;
-
-    public List<SpriteRenderer> sr = new List<SpriteRenderer>();
+    public float blinkDistance;
 
     // Start is called before the first frame update
     void Start()
     {
         // Test
-        skill = SkillManager.instance.GetSkill_ReverseGravity(); 
+        //skill = SkillManager.instance.GetSkill_ReverseGravity(); 
+        // skill = SkillManager.instance.Get_SpeedUp();
+        //skill = SkillManager.instance.Get_SeconedJump();
+        skill = SkillManager.instance.Get_Blink();
 
         joint = GetComponent<FixedJoint2D>();
         ani = GetComponent<Animator>();
@@ -89,7 +91,7 @@ public class Character : MonoBehaviour
 
         rig_Ski.AddForceAtPosition(tf_Ski.transform.up * force * _mutiple, leftPoint.transform.position);
     }
-    public void AddForceAtRight(float _mutiple)
+    public void AddForceAtRight(float _mutiple = 1.0f)
     {
         if (!readyToJump_Right)
             return;
@@ -118,6 +120,10 @@ public class Character : MonoBehaviour
             Gizmos.color = Color.red;
         }
         Gizmos.DrawLine((Vector2)rightPoint.transform.position, (Vector2)rightPoint.transform.position + (Vector2)tf_Ski.up * -1 * Checklength);
+
+        Gizmos.color = Color.blue;
+        Vector2 v = transform.position + transform.right * blinkDistance;
+        Gizmos.DrawSphere(v, 1.5f);
     }
 
     public void Rotate_Left()
@@ -216,6 +222,13 @@ public class Character : MonoBehaviour
         rig.velocity = Vector3.zero;
         rig_Ski.velocity = Vector3.zero;
         transform.eulerAngles = Vector3.zero;
+
+        SkillManager.instance.CancelInvoke();
+        if (skill != null)
+        {
+            skill.Recall(this);
+            skill.Reflash();
+        }
     }
 
     public void ReleaseSkill()
@@ -235,11 +248,5 @@ public class Character : MonoBehaviour
         return rig;
     }
 
-    public void ReverseSprite()
-    {
-        foreach(var i in sr)
-        {
-            i.flipX = !i.flipX;
-        }
-    }
+   
 }

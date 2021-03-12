@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
         Judge.instance.Reset();
 
         DataRecorder.instance.ResetTime();
+
+        StopAllCoroutines();
     }
 
     public void Restart_WithAni()

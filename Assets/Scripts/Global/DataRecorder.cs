@@ -35,8 +35,6 @@ public class DataRecorder : MonoBehaviour
 
         min = (int)(Time.time / 60);
         sec = (int)(Time.time % 60);
-
-        player_Velocity_X = Mathf.Clamp(player_Velocity_X,0, Mathf.Infinity);
     }
 
     public void ResetTime()

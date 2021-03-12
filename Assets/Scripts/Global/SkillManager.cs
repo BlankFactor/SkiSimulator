@@ -8,7 +8,11 @@ public class SkillManager : MonoBehaviour
     public static SkillManager instance;
 
     public Character character;
+
     private ReverseGravity reverseGravity;
+    private SpeedUp speedUp;
+    private SeconedJump secondJump;
+    private Blink blink;
 
     ISkill skill;
     SkillProperty property;
@@ -18,11 +22,32 @@ public class SkillManager : MonoBehaviour
 
         reverseGravity = gameObject.AddComponent<ReverseGravity>();
         reverseGravity.hideFlags = HideFlags.HideInInspector;
+
+        speedUp = gameObject.AddComponent<SpeedUp>();
+        speedUp.hideFlags = HideFlags.HideInInspector;
+
+        secondJump = gameObject.AddComponent<SeconedJump>();
+        secondJump.hideFlags = HideFlags.HideInInspector;
+
+        blink = gameObject.AddComponent<Blink>();
+        blink.hideFlags = HideFlags.HideInInspector;
     }
 
     public ReverseGravity GetSkill_ReverseGravity()
     {
         return reverseGravity;
+    }
+    public SpeedUp Get_SpeedUp()
+    {
+        return speedUp;
+    }
+    public SeconedJump Get_SeconedJump()
+    {
+        return secondJump;
+    }
+    public Blink Get_Blink()
+    {
+        return blink;
     }
 
     public void InvokeRecall(ISkill _skill,SkillProperty _property)
@@ -36,14 +61,24 @@ public class SkillManager : MonoBehaviour
     {
         skill.Recall(character);
         Invoke("Reflash", property.coolDown);
+        
     }
     void Reflash()
     {
         skill.Reflash();
     }
 
-    public void Reflash(ISkill _skill, float _duration)
+    public void InvokeReflash(ISkill _skill, SkillProperty _property)
     {
+        skill = _skill;
+        Invoke("Reflash", _property.coolDown);
+    }
 
+    public void CancelInvoke_Cus()
+    {
+        if (IsInvoking())
+        {
+            CancelInvoke();
+        }
     }
 }

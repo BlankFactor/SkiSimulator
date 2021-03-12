@@ -41,7 +41,7 @@ public class Ski : MonoBehaviour
     {
         if (!GameManager.instance.CheckIfGaming()) return;
 
-        if (collision.transform.tag == "Snowfield" && DataRecorder.instance.player_Velocity_X >= 5.0f)
+        if (collision.transform.tag == "Snowfield" && Mathf.Abs(DataRecorder.instance.player_Velocity_X) >= 5.0f)
         {
             snowEffect.Play();
         }   
